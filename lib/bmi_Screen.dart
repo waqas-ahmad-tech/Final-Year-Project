@@ -9,6 +9,7 @@ import 'icon_Content.dart';
 import 'reusable_Card.dart';
 import 'HeightUnitSelector.dart';
 import 'weightAndage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class BmiScreen extends StatefulWidget {
   const BmiScreen({super.key});
   @override
@@ -35,14 +36,69 @@ class _BmiScreenState extends State<BmiScreen> {
   int finalHeight=0;
   int gender=1;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
+  final _auth=FirebaseAuth.instance;
+  late User loggedInUser;
+  void getCurrentUser() async{
+    try{
+      final user= await _auth.currentUser;
+      if(user!=null){
+        loggedInUser=user;
+      }
+    }
+    catch(e){
+      print('Exception Came is getUser() BmiScreen');
+    }
+  }
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color(0XFF0A0E21),
         scaffoldBackgroundColor: Color(0xFF0A0E21),
       ),
       home: Scaffold(
-        body: SafeArea(
+        appBar: AppBar(
+          backgroundColor: Color(0xFF0A0E21),
+          iconTheme: IconThemeData(
+            color: Colors.white, // ← Yahan apna desired color do
+          ),
+          elevation: 4,
+          shadowColor: Colors.black.withOpacity(0.9),
+          title: Center(child: Text("BMI Calculator",style: TextStyle(color: Colors.white),)),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFF070A17),
+                ),
+                child: Center(
+                  child: Text(
+                    'Menu',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text('Logout', style: TextStyle(color: Colors.red)),
+                onTap: () {
+                  _auth.signOut();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+          body: SafeArea(
           child: Column(
             children: [
               Expanded(
@@ -155,21 +211,24 @@ class _BmiScreenState extends State<BmiScreen> {
                       colour: kActiveCardColor,
                       cardChild: Center(
                         child: Center(child:
-                        weightAndAge(
-                          lable: 'Weight(Kg)',
-                          data:"$selectedWeight",
-                          icon1: Icons.add,
-                          icon2: Icons.remove,
-                          onPressedP: (){
-                            setState(() {
-                              selectedWeight++;
-                            });
-                          },
-                          onPressedM: (){
-                            setState(() {
-                              selectedWeight--;
-                            });
-                          },
+                        Padding(
+                          padding: EdgeInsets.only(top: 30),
+                          child: weightAndAge(
+                            lable: 'Weight(Kg)',
+                            data:"$selectedWeight",
+                            icon1: Icons.add,
+                            icon2: Icons.remove,
+                            onPressedP: (){
+                              setState(() {
+                                selectedWeight++;
+                              });
+                            },
+                            onPressedM: (){
+                              setState(() {
+                                selectedWeight--;
+                              });
+                            },
+                          ),
                         ),
                         ),
                       ),
@@ -178,21 +237,24 @@ class _BmiScreenState extends State<BmiScreen> {
                       child: ReusableCard(
                         colour: kActiveCardColor,
                         cardChild: Center(
-                          child: weightAndAge(
-                            lable: "Age",
-                            data: '$selectedAge',
-                            icon1: Icons.add,
-                            icon2: Icons.remove,
-                            onPressedP: (){
-                              setState(() {
-                                selectedAge++;
-                              });
-                            },
-                            onPressedM: (){
-                              setState(() {
-                                selectedAge--;
-                              });
-                            },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 30),
+                            child: weightAndAge(
+                              lable: "Age",
+                              data: '$selectedAge',
+                              icon1: Icons.add,
+                              icon2: Icons.remove,
+                              onPressedP: (){
+                                setState(() {
+                                  selectedAge++;
+                                });
+                              },
+                              onPressedM: (){
+                                setState(() {
+                                  selectedAge--;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ),

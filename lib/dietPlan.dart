@@ -81,11 +81,11 @@ class _DietplanState extends State<Dietplan> {
                         if(widget.bmiCategory=="Underweight")...[
                           DietCard(imagePath: 'assets/UnderweightBreakfast/Peanut Butter Banana Toast.jpg', foodName: 'Peanut Butter Banana Toast', caloriesAmount: '300', weight: '100G', proteinAmount: 7, carbAmount: 35, fatAmount: 12),
                           DietCard(imagePath: 'assets/UnderweightBreakfast/Paneer Paratha.jpg', foodName: 'Paneer Paratha', caloriesAmount: '350', weight: '150G', proteinAmount: 12, carbAmount: 40, fatAmount: 20),
-                          DietCard(imagePath: 'assets/UnderweightBreakfast/Scrambled Eggs.jpg', foodName: 'Scrambled Eggs with Wheat Bread', caloriesAmount: '320', weight: '150G', proteinAmount: 15, carbAmount: 30, fatAmount: 14),
+                          DietCard(imagePath: 'assets/UnderweightBreakfast/Scrambled Eggs.jpg', foodName: 'Scrambled Eggs with Bread', caloriesAmount: '320', weight: '150G', proteinAmount: 15, carbAmount: 30, fatAmount: 14),
                           DietCard(imagePath: 'assets/UnderweightBreakfast/Oats with Dry Fruits.jpg', foodName: 'Oats with Dry Fruits', caloriesAmount: '280', weight: '150G', proteinAmount: 10, carbAmount: 40, fatAmount: 8),
                           DietCard(imagePath: 'assets/UnderweightBreakfast/Cheese Sandwich.jpg', foodName: 'Cheese Sandwich with Butter', caloriesAmount: '330', weight: '150G', proteinAmount: 12, carbAmount: 35, fatAmount: 16),
                           DietCard(imagePath: 'assets/UnderweightBreakfast/Besan Chilla.jpg', foodName: 'Besan Chilla with Green Chutney', caloriesAmount: '300', weight: '150G', proteinAmount: 10, carbAmount: 30, fatAmount: 12),
-                          DietCard(imagePath: 'assets/UnderweightBreakfast/Banana Almond Milkshake.jpg', foodName: 'Milkshake with Banana and Almonds', caloriesAmount: '350', weight: '200G', proteinAmount: 10, carbAmount: 45, fatAmount: 12),
+                          DietCard(imagePath: 'assets/UnderweightBreakfast/Banana Almond Milkshake.jpg', foodName: 'Banana Milkshake with Almonds', caloriesAmount: '350', weight: '200G', proteinAmount: 10, carbAmount: 45, fatAmount: 12),
                         ]
                         else if(widget.bmiCategory=="Normal")...[
                           DietCard(imagePath: 'assets/HealthyBreakfast/Oats with Dry Fruits.jpg', foodName: 'Oats with Milk and Fruits', caloriesAmount: '250', weight: '150G', proteinAmount: 10, carbAmount: 40, fatAmount: 5),
@@ -93,7 +93,7 @@ class _DietplanState extends State<Dietplan> {
                           DietCard(imagePath: 'assets/HealthyBreakfast/Boiled Eggs Toast.jpg', foodName: 'Boiled Eggs with Wheat Toast', caloriesAmount: '220', weight: '100G', proteinAmount: 12, carbAmount: 20, fatAmount: 8),
                           DietCard(imagePath: 'assets/HealthyBreakfast/Greek Yogurt Berries.jpg', foodName: 'Greek Yogurt with Berries', caloriesAmount: '150', weight: '150G', proteinAmount: 10, carbAmount: 15, fatAmount: 5),
                           DietCard(imagePath: 'assets/HealthyBreakfast/Upma.jpg', foodName: 'Upma with Coconut Chutney', caloriesAmount: '250', weight: '150G', proteinAmount: 8, carbAmount: 35, fatAmount: 6),
-                          DietCard(imagePath: 'assets/HealthyBreakfast/Smoothie Bowl.jpg', foodName: 'Smoothie Bowl with Nuts and Seeds', caloriesAmount: '280', weight: '200G', proteinAmount: 10, carbAmount: 40, fatAmount: 8),
+                          DietCard(imagePath: 'assets/HealthyBreakfast/Smoothie Bowl.jpg', foodName: 'Smoothie Bowl with Nuts Seeds', caloriesAmount: '280', weight: '200G', proteinAmount: 10, carbAmount: 40, fatAmount: 8),
                           DietCard(imagePath: 'assets/HealthyBreakfast/Besan Chilla.jpg', foodName: 'Besan Chilla with Mint Chutney', caloriesAmount: '200', weight: '150G', proteinAmount: 10, carbAmount: 25, fatAmount: 6),
                         ]else if(widget.bmiCategory == 'Overweight' || widget.bmiCategory == 'Obesity' || widget.bmiCategory == 'Very Severe Obesity')...[
                           DietCard(imagePath: 'assets/OverweightBreakfast/Boiled Eggs Avocado.jpg', foodName: 'Boiled Eggs with Avocado', caloriesAmount: '200', weight: '100G', proteinAmount: 12, carbAmount: 8, fatAmount: 5),
@@ -102,7 +102,7 @@ class _DietplanState extends State<Dietplan> {
                           DietCard(imagePath: 'assets/OverweightBreakfast/Oats Porridge.jpg', foodName: 'Oats Porridge with Almonds', caloriesAmount: '180', weight: '150G', proteinAmount: 8, carbAmount: 25, fatAmount: 5),
                           DietCard(imagePath: 'assets/OverweightBreakfast/Moong Dal Chilla.jpg', foodName: 'Moong Dal Chilla', caloriesAmount: '150', weight: '100G', proteinAmount: 10, carbAmount: 15, fatAmount: 4),
                           DietCard(imagePath: 'assets/OverweightBreakfast/Fruit Salad.jpg', foodName: 'Fruit Salad with Chia Seeds', caloriesAmount: '130', weight: '150G', proteinAmount: 4, carbAmount: 25, fatAmount: 3),
-                          DietCard(imagePath: 'assets/OverweightBreakfast/Egg Whites Spinach.jpg', foodName: 'Scrambled Egg Whites with Spinach', caloriesAmount: '100', weight: '150G', proteinAmount: 12, carbAmount: 5, fatAmount: 3),
+                          DietCard(imagePath: 'assets/OverweightBreakfast/Egg Whites Spinach.jpg', foodName: 'Scrambled Egg with Spinach', caloriesAmount: '100', weight: '150G', proteinAmount: 12, carbAmount: 5, fatAmount: 3),
                         ],
                       ],
                     ),
@@ -130,7 +130,7 @@ class _DietplanState extends State<Dietplan> {
                           DietCard(imagePath: 'assets/HealthyLunch/Chicken Salad.jpg', foodName: 'Chicken Salad with Oil Dressing', caloriesAmount: '280', weight: '200G', proteinAmount: 20, carbAmount: 15, fatAmount: 10),
                           DietCard(imagePath: 'assets/HealthyLunch/Rajma Rice.jpg', foodName: 'Rajma with Brown Rice', caloriesAmount: '350', weight: '200G', proteinAmount: 12, carbAmount: 45, fatAmount: 8),
                         ]else if(widget.bmiCategory == 'Overweight' || widget.bmiCategory == 'Obesity' || widget.bmiCategory == 'Very Severe Obesity')...[
-                          DietCard(imagePath: 'assets/OverweightLunch/Grilled Fish Vegetables.jpg', foodName: 'Grilled Fish with Steamed Vegetables', caloriesAmount: '300', weight: '200G', proteinAmount: 25, carbAmount: 20, fatAmount: 10),
+                          DietCard(imagePath: 'assets/OverweightLunch/Grilled Fish Vegetables.jpg', foodName: 'Grilled Fish with Vegetables', caloriesAmount: '300', weight: '200G', proteinAmount: 25, carbAmount: 20, fatAmount: 10),
                           DietCard(imagePath: 'assets/OverweightLunch/Lentil Soup Salad.jpg', foodName: 'Lentil Soup Salad', caloriesAmount: '250', weight: '200G', proteinAmount: 12, carbAmount: 30, fatAmount: 6),
                           DietCard(imagePath: 'assets/OverweightLunch/Grilled Chicken Quinoa.jpg', foodName: 'Grilled Chicken with Quinoa', caloriesAmount: '350', weight: '200G', proteinAmount: 25, carbAmount: 30, fatAmount: 10),
                           DietCard(imagePath: 'assets/OverweightLunch/Vegetable Stir-Fry.jpg', foodName: 'Vegetable Stir-Fry', caloriesAmount: '280', weight: '200G', proteinAmount: 12, carbAmount: 25, fatAmount: 10),
@@ -330,7 +330,8 @@ class percentIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 60, right: 3, top: 30),
+      //TODO: Diet Plan yahan sy set hoga
+      margin: EdgeInsets.only(left: 50, right: 3, top: 25),
       height: 55, // Set the height of the vertical progress bar
       width: 10, // Set the width of the vertical progress bar
       child: RotatedBox(

@@ -6,91 +6,105 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'dart:async'; // For handling asynchronous data streams
 import 'package:pedometer/pedometer.dart'; // For step count and pedestrian status
 import "package:permission_handler/permission_handler.dart";
+
 class pedometer extends StatefulWidget {
-   // Accept recommended steps from previous screen
+  // Accept recommended steps from previous screen
   pedometer({required this.recommendedSteps});
   final int recommendedSteps;
+
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-// State class for MyApp where all the logic and UI is handled
- class _MyAppState extends State<pedometer> {
-
-  // Streams to listen for step count and pedestrian status updates
+class _MyAppState extends State<pedometer> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
 
-  // Variables to store the current status and step count
-  String _status = 'Unknown'; // Default pedestrian status
-  int _steps =0;
-  late int totalSteps; // Goal steps
-  // final int currentSteps = _steps; // Current steps taken
-  double progress =0;
-  double kcal=0;
-  double KM=0;
-  // Default step count
+  String _status = 'Unknown';
+  int? _lastStepCount;
+  int _steps = 0;
+  late int totalSteps;
+  double progress = 0;
+  double kcal = 0;
+  double KM = 0;
+
+  int? _initialStepCount;
 
   @override
   void initState() {
     super.initState();
-    totalSteps=widget.recommendedSteps;// Calls the parent class's initState method
-    initPlatformState(); // Initializes permissions and streams
+    totalSteps = widget.recommendedSteps;
+    initPlatformState();
   }
 
-  // Callback to update step count whenever a new value is received
   void onStepCount(StepCount event) {
     setState(() {
-      _steps = event.steps;// Update the _steps variable with the new count
-      progress=_steps/totalSteps;
-      kcal=_steps*70*0.0005;
-      KM=(_steps*0.762)/1000;
+      if (_lastStepCount == null) {
+        _lastStepCount = event.steps;
+      }
+
+      int diff = event.steps - _lastStepCount!;
+
+      if (diff > 0) {
+        _steps += diff; // Yeh apna custom step counter hai
+      }
+
+      _lastStepCount = event.steps;
+
+      // Update progress and stats
+      progress = _steps / totalSteps;
+      kcal = _steps * 70 * 0.0005;
+      KM = (_steps * 0.762) / 1000;
+
+      if (_steps >= totalSteps) {
+        // Optional reset logic
+        _steps = 0;
+        _lastStepCount = event.steps;
+      }
     });
   }
 
-  // Callback to update pedestrian status whenever a new value is received
+
   void onPedestrianStatusChanged(PedestrianStatus event) {
     setState(() {
-      _status = event.status; // Update the _status variable with the new pedestrian status
+      _status = event.status;
     });
   }
 
-  // Function to request activity recognition permission and initialize streams
   Future<void> initPlatformState() async {
-    // Request permission for activity recognition
     bool granted = await Permission.activityRecognition.request().isGranted;
 
     if (granted) {
-      // If permission is granted, start listening to pedestrian status and step count streams
       _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
-      _pedestrianStatusStream.listen(onPedestrianStatusChanged); // Listen for status updates
+      _pedestrianStatusStream.listen(onPedestrianStatusChanged);
 
       _stepCountStream = Pedometer.stepCountStream;
-      _stepCountStream.listen(onStepCount); // Listen for step count updates
+      _stepCountStream.listen(onStepCount);
     } else {
-      // If permission is denied, set default values
       setState(() {
         _status = 'Permission Denied';
-        _steps =0;
+        _steps = 0;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Current steps taken
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Center all widgets vertically
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('You Required Daily $totalSteps Steps🏆', style: TextStyle(fontSize: 24)), // Label for steps
-              SizedBox(height: 10,),
+              Text('You Required Daily $totalSteps Steps🏆', style: TextStyle(fontSize: 20)),
+              SizedBox(height: 10),
               CircularPercentIndicator(
-                radius: 180.0,
+                //TODO: Pedometer yahan sy set hoga
+                radius: 160.0,
                 lineWidth: 20.0,
-                percent: progress.clamp(0.0, 1.0), // Ensures it doesn't exceed 100%
+                percent: progress.clamp(0.0, 1.0),
                 center: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -102,39 +116,37 @@ class pedometer extends StatefulWidget {
                       "steps",
                       style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400, color: Colors.red),
                     ),
-                    SizedBox(height: 100,),
+                    SizedBox(height: 100),
                   ],
-                ), // Background color of arc
+                ),
                 progressColor: Colors.red,
                 arcType: ArcType.HALF,
                 arcBackgroundColor: Colors.grey.shade400,
                 startAngle: 270,
                 circularStrokeCap: CircularStrokeCap.round,
-                // Progress color
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Resuable(icons: Icons.local_fire_department_sharp, text: kcal.toInt().toString()+' kcal', Iconcolor: Colors.orange),
-                  SizedBox(width: 30,),
-                  Resuable(icons: Icons.location_on, text: KM.toStringAsFixed(1)+' km', Iconcolor: Colors.red),
+                  Resuable(icons: Icons.local_fire_department_sharp, text: kcal.toInt().toString() + ' kcal', Iconcolor: Colors.orange),
+                  SizedBox(width: 30),
+                  Resuable(icons: Icons.location_on, text: KM.toStringAsFixed(1) + ' km', Iconcolor: Colors.red),
                 ],
               ),
-              SizedBox(height: 50), // Spacer between steps and status
-              Text('Pedestrian Status', style: TextStyle(fontSize: 24)), // Label for status
+              SizedBox(height: 50),
+              Text('Pedestrian Status', style: TextStyle(fontSize: 24)),
               Icon(
-                // Display an icon based on the pedestrian status
                 _status == 'walking'
-                    ? Icons.directions_walk // Walking icon
+                    ? Icons.directions_walk
                     : _status == 'stopped'
-                    ? Icons.accessibility_new // Stopped icon
-                    : Icons.error, // Error icon for unknown status
-                size: 80, // Icon size
-                color: Colors.teal, // Icon color
+                    ? Icons.accessibility_new
+                    : Icons.error,
+                size: 80,
+                color: Colors.teal,
               ),
               Text(
-                _status, // Display the current pedestrian status
+                _status,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
               ),
             ],
@@ -149,6 +161,7 @@ class Resuable extends StatelessWidget {
   final IconData icons;
   final String text;
   final Color? Iconcolor;
+
   Resuable({required this.icons, required this.text, required this.Iconcolor});
 
   @override
@@ -166,7 +179,7 @@ class Resuable extends StatelessWidget {
             icons,
             color: Iconcolor,
           ),
-          SizedBox(width: 5,),
+          SizedBox(width: 5),
           Text(
             text,
             style: TextStyle(

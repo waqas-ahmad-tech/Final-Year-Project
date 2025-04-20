@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:intl/intl.dart';
@@ -65,7 +66,7 @@ class _AiNutritionistState extends State<AiNutritionist> {
             child: Row(
               children: [
                 Expanded(
-                  flex: 5,
+                  flex: 15,
                   child: TextField(
                     controller: promptController,
                     style: TextStyle(color: Colors.black, fontSize: 18),
@@ -98,11 +99,11 @@ class _AiNutritionistState extends State<AiNutritionist> {
       ),
     );
   }
-
   Container UserPrompt({required final bool isPrompt, required String message, required String date}) {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(15),
+      constraints: BoxConstraints(maxWidth: 400), // ✅ Max width set
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal:10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
         color: isPrompt == true ? Colors.green : Colors.grey,
         borderRadius: BorderRadius.circular(20),
@@ -118,12 +119,15 @@ class _AiNutritionistState extends State<AiNutritionist> {
               color: isPrompt ? Colors.white : Colors.black,
             ),
           ),
-          Text(
-            date,
-            style: TextStyle(
-              fontWeight: isPrompt ? FontWeight.bold : FontWeight.normal,
-              fontSize: 18,
-              color: isPrompt ? Colors.white : Colors.black,
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              date,
+              style: TextStyle(
+                fontWeight: isPrompt ? FontWeight.bold : FontWeight.normal,
+                fontSize: 11,
+                color: isPrompt ? Colors.white : Colors.black,
+              ),
             ),
           ),
         ],

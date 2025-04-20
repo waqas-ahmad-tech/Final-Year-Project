@@ -36,7 +36,7 @@ class _ExerciseModuleState extends State<ExerciseModule> {
                   neumorphicEffect: true,
                   isTimerTextShown: true,
                   width: 175,
-                  duration: 20,
+                  duration: 30,
                   controller: controller),
             ),
             Row(
